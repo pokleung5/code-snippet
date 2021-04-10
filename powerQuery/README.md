@@ -18,8 +18,6 @@
 |1|5|6|7|8|
 |2|9|0|1|2|
 
----
-
 ## TransposeColumn
 
 - Transpose part of the table and expand to the rest.
