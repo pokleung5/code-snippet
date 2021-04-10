@@ -4,8 +4,6 @@
 
 - a very generic solution to download all files mentioned in those m3u8 playlist
 
-----
-
 ## upload_py.cgi
 
 - Update variable
