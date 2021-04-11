@@ -9,22 +9,16 @@ video_dir="$1"
 base_playlist="$2"
 base_url="$3/${folder_name}"
 
-if [ "$#" -lt "2" ]; then
-    echo "\
-    Usage: \n\
-        $0 \${video_dir} \${url} \${[optional] url of your hosting server}\
-    "
-    exit
-fi
+wget_opts=' -U Mozilla --no-check-certificate'
 
 get_file () {
     local url="$1"; shift
-    local file_path=$(wget "$*" "${url}" 2>&1 | sed -n 's/Saving to: .\(.\+\).$/\1/p')
+    local file_path=$(wget $* ${url} ${wget_opts} 2>&1 | sed -n 's/Saving to: .\(.\+\).$/\1/p')
     echo ${file_path}
 }
 
 get_file_to_base () {
-    local file_path=$(cd ${base_folder} && get_file "$1" "-r")
+    local file_path=$(cd ${base_folder} && get_file "$1" " -r")
     echo "${base_folder}/${file_path}"
 }
 
@@ -60,6 +54,16 @@ download_playlist () {
         sed -i "s;[a-zA-Z]://;${relative_base}/;g" ${playlist_path}
     fi
 }
+
+## move to bottom so you can source this file
+if [ "$#" -lt "2" ]; then
+    echo "\
+    Usage: \n\
+        $0 \${video_dir} \${url} \${[optional] url of your hosting server}\
+    "
+    return
+    exit 1
+fi
 
 download_playlist ${base_playlist}
 mv ${base_folder} ${video_dir}
