@@ -22,7 +22,7 @@ const formatTemplate = (template, ...args) => {
 
     // ref: https://developer.mozilla.org/en-US/docs/Web/API/console#using_string_substitutions
     const remainArgs = [];
-    const formatted = template.replace(/%(?:\.([0-9]+)([idf])|([csoO]))+/g, (match, len, numType, strType) => {
+    const formatted = template.replace(/%(?:\.([0-9]+)([idf])|([csoO]))/g, (match, len, numType, strType) => {
         const data = args.shift();
         if (data !== undefined) {
             switch (numType || strType) {
